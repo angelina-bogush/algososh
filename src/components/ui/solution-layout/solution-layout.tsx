@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactNode } from "react";
 import { ReturnButton } from "../return-button/return-button";
 import { Link } from "react-router-dom";
 import styles from "./solution-layout.module.css";
@@ -6,13 +7,14 @@ import styles from "./solution-layout.module.css";
 interface SolutionLayoutProps {
   title: string;
   extraClass?: string;
+  children: ReactNode
 }
 
-export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
+export const SolutionLayout = ({
   extraClass = "",
   title,
   children,
-}) => {
+}: SolutionLayoutProps) => {
   return (
     <main className={`${styles.content} ${extraClass}`}>
       <div className={styles.titleBox}>
@@ -29,10 +31,12 @@ export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
         <Link className={styles.link} to="/">
           <ReturnButton extraClass={styles.returnButton} />
         </Link>
+        <div className={styles.contentSpace}>
         <h3 className={`text text_type_h3 text_color_h3 ${styles.cardTitle}`}>
           {title}
         </h3>
         {children}
+        </div>
       </div>
       <p
         className={`text text_type_column text_color_input mt-14 ${styles.copyright}`}

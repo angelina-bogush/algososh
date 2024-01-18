@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 
 .titleBox {
@@ -24,6 +25,11 @@
   padding: 36px;
   height: 693px;
   box-sizing: border-box;
+}
+.contentSpace{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .returnButton {
