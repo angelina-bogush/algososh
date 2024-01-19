@@ -20,7 +20,7 @@ export const StringComponent: React.FC = () => {
   const [arrayLetter, setArrayLetter] = useState<Array<TArray>>([]);
   const [loading, setLoading] = useState(false);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setString(e.currentTarget.value);
+    setString(e.target.value);
   };
 
   const reverseArray = async (

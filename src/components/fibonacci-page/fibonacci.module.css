@@ -1,0 +1,11 @@
+.input{
+    width: 570px;
+    display: flex;
+    gap: 12px
+}
+.circles{
+    display: flex;
+   gap: 48px 16px;
+   max-width: 944px;
+   flex-wrap: wrap;
+}
