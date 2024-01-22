@@ -1,0 +1,12 @@
+.radio{
+    padding-left: 40px;
+    padding-right: 52px;
+}
+.wrapper{
+    display: flex;
+    align-items: center;
+}
+.buttonSort{
+    margin-left: 12px;
+    margin-right: 80px;
+}

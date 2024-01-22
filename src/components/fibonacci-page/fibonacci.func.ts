@@ -1,4 +1,4 @@
-import { DELAY_IN_MS } from './../../constants/delays';
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { delay } from "../../services/utils";
 
 export const makeFibonacciArray = async (num: number) => {
@@ -12,7 +12,7 @@ export const makeFibonacciArray = async (num: number) => {
 export const fibonacciDelay = async(num: number, setFibonacciArray: React.Dispatch<React.SetStateAction<number[]>>) => {
     const arr = await makeFibonacciArray(num);
     for (let i = 0; i < arr.length; i++) {
-      await delay(DELAY_IN_MS);
+      await delay(SHORT_DELAY_IN_MS);
       setFibonacciArray(arr.slice(0, i + 1));
     }
 }
