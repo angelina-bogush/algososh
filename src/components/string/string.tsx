@@ -11,7 +11,7 @@ import { delay } from "../../services/utils";
 import { DELAY_IN_MS } from "../../constants/delays";
 
 export type TArray = {
-  value: string;
+  value: string | number;
   color: ElementStates;
 };
 
@@ -77,7 +77,7 @@ export const StringComponent: React.FC = () => {
         {arrayLetter &&
           arrayLetter.map((letter, index) => (
             <div key={index}>
-              <Circle letter={letter.value} state={letter.color} />
+              <Circle letter={String(letter.value)} state={letter.color} />
             </div>
           ))}
       </div>

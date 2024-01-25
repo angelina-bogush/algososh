@@ -1,6 +1,6 @@
 import { TArray } from "../components/string/string";
 
-export const swapFunc = (arr: TArray[] | number[], firstInd: number, secondInd: number) => {
+export const swapFunc = (arr: TArray[], firstInd: number, secondInd: number) => {
     const temp = arr[firstInd];
     arr[firstInd] = arr[secondInd];
     arr[secondInd] = temp;

@@ -10,3 +10,9 @@
     margin-left: 12px;
     margin-right: 80px;
 }
+.sorting{
+    padding-top: 48px;
+    display: flex;
+    gap: 10px;
+    align-items: end;
+}
