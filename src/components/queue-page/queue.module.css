@@ -1,0 +1,16 @@
+.wrapper{
+    display: flex;
+    gap: 12px
+}
+.cleanButton{
+    margin-left: 68px;
+}
+.input{
+    width: 377px
+}
+.circlesWrapper{
+    padding-top: 48px;
+    list-style-type: none;
+    display: flex;
+    gap: 10px
+}
