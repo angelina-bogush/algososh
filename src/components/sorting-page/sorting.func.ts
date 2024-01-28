@@ -69,11 +69,14 @@ export const selectionSort = async (
     setArray([...arr]);
 };
 
+export const randomNum = (min: number, max: number) => {
+  return  Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export const randomArr = () => {
   let minLength = 3;
   let maxLength = 17;
-  const arrLength =
-    Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+  const arrLength = randomNum(minLength, maxLength)
   const arr = [];
   for (let i = 0; i < arrLength; i++) {
     const randomNum = Math.ceil(Math.random() * 100);

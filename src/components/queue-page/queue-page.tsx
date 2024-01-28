@@ -26,7 +26,6 @@ export const QueuePage = () => {
     clear: false
   });
 
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };

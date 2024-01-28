@@ -1,0 +1,35 @@
+.wrapper{
+    max-width: 952px;
+}
+.inputs{
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    padding-top: 12px;
+}
+.input{
+    max-width: 204px;
+}
+.button{
+    width: 100%
+}
+.list{
+    list-style-type: none;
+    display: flex;
+    padding-top: 90px
+}
+.part{
+display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-left: 16px;
+  /* position: relative; */
+}
+.circle{
+  position: relative;
+}
+.circleTop{
+position: absolute;
+top: -80px;
+left: 10px
+}
