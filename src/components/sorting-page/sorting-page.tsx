@@ -1,20 +1,20 @@
-import styles from './sorting.module.css'
-import { ChangeEvent } from 'react';
-import { Direction } from '../../types/direction';
-import { RadioInput } from '../ui/radio-input/radio-input';
+import styles from "./sorting.module.css";
+import { ChangeEvent } from "react";
+import { Direction } from "../../types/direction";
+import { RadioInput } from "../ui/radio-input/radio-input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { useState } from "react";
-import { Button } from '../ui/button/button';
-import { Column } from '../ui/column/column';
-import { ElementStates } from '../../types/element-states';
-import { selectionSort, bubbleSort, randomArr } from './sorting.func';
+import { Button } from "../ui/button/button";
+import { Column } from "../ui/column/column";
+import { ElementStates } from "../../types/element-states";
+import { selectionSort, bubbleSort, randomArr } from "./sorting.func";
 
 export type TArray = {
-  value: number,
-  color: ElementStates
-}
+  value: number;
+  color: ElementStates;
+};
 
-type TSort = 'selection' | 'bubble'
+type TSort = "selection" | "bubble";
 
 export const SortingPage = () => {
   const [randomNums, setRandomNums] = useState<TArray[]>([]);
@@ -27,35 +27,33 @@ export const SortingPage = () => {
     setRandomNums(newArr);
   };
 
-  const sortedArrayAscend = async(sorting: Direction) => {
+  const sortedArrayAscend = async (sorting: Direction) => {
     setSorting(sorting);
     if (sortType === "bubble") {
-      setLoading(true)
-      await bubbleSort(randomNums, Direction.Ascending, setRandomNums)
-      setLoading(false)
+      setLoading(true);
+      await bubbleSort(randomNums, Direction.Ascending, setRandomNums);
+      setLoading(false);
     } else {
-      setLoading(true)
-      await selectionSort(randomNums, Direction.Ascending, setRandomNums)
-      setLoading(false)
+      setLoading(true);
+      await selectionSort(randomNums, Direction.Ascending, setRandomNums);
+      setLoading(false);
     }
   };
-  const sortedArrayDescend = async(sorting: Direction) => {
+  const sortedArrayDescend = async (sorting: Direction) => {
     setSorting(sorting);
-    setLoading(true)
+    setLoading(true);
     if (sortType === "bubble") {
-
-      await bubbleSort(randomNums, Direction.Descending, setRandomNums)
+      await bubbleSort(randomNums, Direction.Descending, setRandomNums);
     } else {
-      setLoading(true)
-      selectionSort(randomNums, Direction.Descending, setRandomNums)
+      setLoading(true);
+      selectionSort(randomNums, Direction.Descending, setRandomNums);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const setLoader = (direction: Direction) => {
     return sorting === direction && loading === true ? true : false;
   };
-
 
   return (
     <SolutionLayout title="Сортировка массива">
@@ -74,22 +72,35 @@ export const SortingPage = () => {
           name="bubble"
           checked={sortType === "bubble"}
           onChange={() => setSortType("bubble")}
-        
         />
-        <Button text="По возрастанию" sorting={Direction.Ascending} onClick={() => sortedArrayAscend(Direction.Ascending)} isLoader={setLoader(Direction.Ascending)}/>
+        <Button
+          text="По возрастанию"
+          sorting={Direction.Ascending}
+          onClick={() => sortedArrayAscend(Direction.Ascending)}
+          isLoader={setLoader(Direction.Ascending)}
+          disabled={randomNums.length === 0 || setLoader(Direction.Descending)}
+        />
         <Button
           text="По убыванию"
           extraClass={styles.buttonSort}
           sorting={Direction.Descending}
           onClick={() => sortedArrayDescend(Direction.Descending)}
           isLoader={setLoader(Direction.Descending)}
+          disabled={randomNums.length === 0 || setLoader(Direction.Ascending)}
         />
-        <Button text="Новый массив" onClick={createRandomArr}/>
+        <Button
+          text="Новый массив"
+          onClick={createRandomArr}
+          disabled={
+            setLoader(Direction.Descending) || setLoader(Direction.Ascending)
+          }
+        />
       </div>
       <div className={styles.sorting}>
-        {randomNums.length !== 0 && randomNums.map((num, index) => (
-          <Column index={num.value} key={index} state={num.color}/>
-        ))}
+        {randomNums.length !== 0 &&
+          randomNums.map((num, index) => (
+            <Column index={num.value} key={index} state={num.color} />
+          ))}
       </div>
     </SolutionLayout>
   );

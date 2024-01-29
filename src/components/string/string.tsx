@@ -15,7 +15,7 @@ export type TArray = {
   color: ElementStates;
 };
 
-export const StringComponent: React.FC = () => {
+export const StringComponent = () => {
   const [string, setString] = useState("");
   const [arrayLetter, setArrayLetter] = useState<Array<TArray>>([]);
   const [loading, setLoading] = useState(false);
@@ -26,10 +26,8 @@ export const StringComponent: React.FC = () => {
   const reverseArray = async (
     arr: TArray[] | [],
     setArray: React.Dispatch<React.SetStateAction<TArray[]>>
-  ) => { 
-
+  ) => {
     const mid = Math.ceil(arr.length / 2);
-   
 
     for (let i = 0; i < mid; i++) {
       let j = arr.length - 1 - i;
@@ -42,7 +40,6 @@ export const StringComponent: React.FC = () => {
       arr[i].color = arr[j].color = ElementStates.Modified;
       setArray([...arr]);
     }
-
   };
 
   const submitInput = async (e: React.FormEvent, string: string) => {
@@ -52,11 +49,11 @@ export const StringComponent: React.FC = () => {
       .trim()
       .split("")
       .map((value) => ({ value, color: ElementStates.Default }));
-      try {
-        await reverseArray(arr, setArrayLetter);
-      } catch (error) {
-        console.error(error);
-      }    
+    try {
+      await reverseArray(arr, setArrayLetter);
+    } catch (error) {
+      console.error(error);
+    }
     setLoading(false);
   };
   return (

@@ -1,11 +1,10 @@
-import { swapFunc } from "../../services/utils"
+import { swapFunc } from "../../services/utils";
 import { delay } from "../../services/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { Dispatch, SetStateAction } from "react";
 import { TArray } from "./sorting-page";
 import { ElementStates } from "../../types/element-states";
 import { Direction } from "../../types/direction";
-
 
 export const bubbleSort = async (
   arr: TArray[],
@@ -66,17 +65,17 @@ export const selectionSort = async (
     setArray([...arr]);
   }
   arr[arr.length - 1].color = ElementStates.Modified;
-    setArray([...arr]);
+  setArray([...arr]);
 };
 
 export const randomNum = (min: number, max: number) => {
-  return  Math.floor(Math.random() * (max - min + 1)) + min;
-}
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 export const randomArr = () => {
   let minLength = 3;
   let maxLength = 17;
-  const arrLength = randomNum(minLength, maxLength)
+  const arrLength = randomNum(minLength, maxLength);
   const arr = [];
   for (let i = 0; i < arrLength; i++) {
     const randomNum = Math.ceil(Math.random() * 100);

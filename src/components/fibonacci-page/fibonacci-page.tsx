@@ -6,7 +6,7 @@ import { Input } from "../ui/input/input";
 import { ChangeEvent } from "react";
 import { FormEvent } from "react";
 import { Circle } from "../ui/circle/circle";
-import {fibonacciDelay } from "./fibonacci.func";
+import { fibonacciDelay } from "./fibonacci.func";
 
 export const FibonacciPage: React.FC = () => {
   const [number, setNumber] = useState<number>();
@@ -21,7 +21,7 @@ export const FibonacciPage: React.FC = () => {
     if (!number) return;
     setLoading(true);
     e.preventDefault();
-    fibonacciDelay(number, setFibonacciArray)
+    await fibonacciDelay(number, setFibonacciArray);
     setLoading(false);
   };
 
