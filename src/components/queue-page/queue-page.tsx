@@ -1,29 +1,32 @@
-import styles from './queue.module.css'
-import { Input } from '../ui/input/input';
-import { Button } from '../ui/button/button';
-import { Circle } from '../ui/circle/circle';
-import { useState, ChangeEvent, useEffect } from 'react';
+import styles from "./queue.module.css";
+import { Input } from "../ui/input/input";
+import { Button } from "../ui/button/button";
+import { Circle } from "../ui/circle/circle";
+import { useState, ChangeEvent } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import { ElementStates } from '../../types/element-states';
-import { Queue } from './queue';
-import { delay } from '../../services/utils';
-import { SHORT_DELAY_IN_MS } from '../../constants/delays';
+import { ElementStates } from "../../types/element-states";
+import { Queue } from "./queue";
+import { delay } from "../../services/utils";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export type TQueueCircle = {
-  value?: string,
+  value: string;
   color: ElementStates;
-}
-const CirclesQueue = new Queue<TQueueCircle | null>(8)
-const defaultQueue: TQueueCircle[] = Array.from({ length: 7 }, () => ({ value: "", color: ElementStates.Default }));
+};
+const CirclesQueue = new Queue<TQueueCircle | null>(8);
+const defaultQueue: TQueueCircle[] = Array.from({ length: 7 }, () => ({
+  value: "",
+  color: ElementStates.Default,
+}));
 
 export const QueuePage = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [queueArray, setQueueArray] = useState<TQueueCircle[]>(defaultQueue)
-  const [queue, setQueue] = useState(CirclesQueue)
+  const [inputValue, setInputValue] = useState("");
+  const [queueArray, setQueueArray] = useState<TQueueCircle[]>(defaultQueue);
+  const [queue, setQueue] = useState(CirclesQueue);
   const [isLoading, setIsLoading] = useState({
     add: false,
     delete: false,
-    clear: false
+    clear: false,
   });
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,44 +34,64 @@ export const QueuePage = () => {
   };
   const addValue = async () => {
     if (inputValue) {
-      setIsLoading(prevState => ({ ...prevState, add: true }))
-      setInputValue('');
+      setIsLoading((prevState) => ({ ...prevState, add: true }));
+      setInputValue("");
       CirclesQueue.enqueue({ value: inputValue, color: ElementStates.Default });
       setQueue(CirclesQueue);
-      queueArray[queue.getTail() - 1] = { value: '', color: ElementStates.Changing };
+      queueArray[queue.getTail() - 1] = {
+        value: "",
+        color: ElementStates.Changing,
+      };
       setQueueArray([...queueArray]);
       await delay(SHORT_DELAY_IN_MS);
-      queueArray[queue.getTail() - 1] = { value: inputValue, color: ElementStates.Changing };
+      queueArray[queue.getTail() - 1] = {
+        value: inputValue,
+        color: ElementStates.Changing,
+      };
       setQueueArray([...queueArray]);
-      queueArray[queue.getTail() - 1] = { value: inputValue, color: ElementStates.Default };
+      queueArray[queue.getTail() - 1] = {
+        value: inputValue,
+        color: ElementStates.Default,
+      };
       setQueueArray([...queueArray]);
-      setIsLoading(prevState => ({ ...prevState, add: false }))
+      setIsLoading((prevState) => ({ ...prevState, add: false }));
     }
   };
-  const deleteValue = async() => {
-    setIsLoading(prevState => ({ ...prevState, delete: true }))
+  const deleteValue = async () => {
+    setIsLoading((prevState) => ({ ...prevState, delete: true }));
     queue.dequeue();
     setQueue(queue);
-    queueArray[queue.getHead() - 1] = { value: queueArray[queue.getHead() - 1].value, color: ElementStates.Changing };
+    queueArray[queue.getHead() - 1] = {
+      value: queueArray[queue.getHead() - 1].value,
+      color: ElementStates.Changing,
+    };
     setQueueArray([...queueArray]);
     await delay(SHORT_DELAY_IN_MS);
-    queueArray[queue.getHead() - 1] = { value: '', color: ElementStates.Default };
+    queueArray[queue.getHead() - 1] = {
+      value: "",
+      color: ElementStates.Default,
+    };
     setQueueArray([...queueArray]);
-    setIsLoading(prevState => ({ ...prevState, delete: false }))
-  }
+    setIsLoading((prevState) => ({ ...prevState, delete: false }));
+  };
   const clearQueue = () => {
-    setIsLoading(prevState => ({ ...prevState, clear: true }))
+    setIsLoading((prevState) => ({ ...prevState, clear: true }));
     CirclesQueue.clear();
     setQueue(CirclesQueue);
-    setQueueArray(Array.from({ length: 7 }, () => ({ value: "", color: ElementStates.Default })))
-    setIsLoading(prevState => ({ ...prevState, clear: false }))
-  }
+    setQueueArray(
+      Array.from({ length: 7 }, () => ({
+        value: "",
+        color: ElementStates.Default,
+      }))
+    );
+    setIsLoading((prevState) => ({ ...prevState, clear: false }));
+  };
   const head = (index: number) => {
-    return index === queue.getHead() && !queue.isEmpty() ? 'head' : null
-  }
+    return index === queue.getHead() && !queue.isEmpty() ? "head" : null;
+  };
   const tail = (index: number) => {
-    return index === queue.getTail() - 1 && !queue.isEmpty() ? 'tail' : null
-  }
+    return index === queue.getTail() - 1 && !queue.isEmpty() ? "tail" : null;
+  };
   return (
     <SolutionLayout title="Очередь">
       <div className={styles.wrapper}>
@@ -82,13 +105,23 @@ export const QueuePage = () => {
           extraClass={styles.input}
         />
 
-        <Button text="Добавить" disabled={!inputValue} onClick={addValue} isLoader={isLoading.add}/>
-        <Button text="Удалить" onClick={deleteValue}  disabled={queue.isEmpty()} isLoader={isLoading.delete}/>
+        <Button
+          text="Добавить"
+          disabled={!inputValue || (isLoading.delete || isLoading.clear)}
+          onClick={addValue}
+          isLoader={isLoading.add}
+        />
+        <Button
+          text="Удалить"
+          onClick={deleteValue}
+          disabled={queue.isEmpty() || (isLoading.add || isLoading.clear)}
+          isLoader={isLoading.delete}
+        />
         <Button
           text="Очистить"
           extraClass={styles.cleanButton}
           onClick={clearQueue}
-          disabled={queue.isEmpty()}
+          disabled={queue.isEmpty() || (isLoading.add || isLoading.delete)}
           isLoader={isLoading.clear}
         />
       </div>

@@ -23,7 +23,6 @@ display: flex;
   align-items: center;
   gap: 16px;
   padding-left: 16px;
-  /* position: relative; */
 }
 .circle{
   position: relative;
@@ -32,4 +31,9 @@ display: flex;
 position: absolute;
 top: -80px;
 left: 10px
+}
+.circleBottom{
+    position: absolute;
+    top: 120px;
+    left: 10px
 }

@@ -7,7 +7,6 @@ export interface ILinkedList<T> {
   getByIndex: (index: number) => void;
   deleteHead: () => void;
   deleteTail: () => void;
-  // getSize: () => number;
 }
 export class Node<T> {
   value: T;
@@ -24,16 +23,15 @@ export class LinkedList<T> implements ILinkedList<T> {
   public size: number;
   private array(items: T[]) {
     items.forEach((value) => this.append(value));
-};
+  }
   constructor(items: T[]) {
     this.head = null;
     this.tail = null;
     this.size = 0;
-    if(items.length !== 0) this.array(items)
+    if (items.length !== 0) this.array(items);
   }
   deleteHead() {
     if (this.head === null) {
-      console.log("List is empty");
       return;
     } else if (this.size === 1) {
       this.head = null;
@@ -62,33 +60,26 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
     curr.next = null;
     this.size--;
-};
+  }
 
   insertAt(element: T, index: number) {
     if (index < 0 || index > this.size) {
-      console.log("Enter a valid index");
       return;
     } else {
       const node = new Node(element);
-
-      // добавить элемент в начало списка
       if (index === 0) {
         node.next = this.head;
         this.head = node;
       } else {
         let curr = this.head;
         let currIndex = 0;
-
         // перебрать элементы в списке до нужной позиции
-
         while (currIndex < index - 1) {
           currIndex++;
           if (curr) {
             curr = curr.next;
           }
         }
-
-        // добавить элемент
         if (curr) {
           node.next = curr.next;
           curr.next = node;
@@ -128,14 +119,11 @@ export class LinkedList<T> implements ILinkedList<T> {
       let curr = this.head;
       let prev = null;
       let currIndex = 0;
-      // перебрать элементы в списке до нужной позиции
       while (currIndex < index && curr) {
         currIndex++;
         prev = curr;
         curr = curr.next;
       }
-
-      // удалить элемент
       if (curr) {
         if (prev === null) {
           this.head = curr.next;
@@ -153,7 +141,6 @@ export class LinkedList<T> implements ILinkedList<T> {
     } else {
       let curr = this.head;
       let currIndex = 0;
-      // перебрать элементы в списке до нужной позиции
       while (currIndex < index) {
         if (curr) {
           currIndex++;
@@ -164,28 +151,19 @@ export class LinkedList<T> implements ILinkedList<T> {
       return curr?.value;
     }
   }
-  getTail = () => this.tail
-  getHead = () => this.head
+
   makeArray() {
     let curr = this.head;
     const res = [];
-  
+
     while (curr) {
       res.push(curr.value);
       curr = curr.next;
-    };
-  
-    const arr = [...res].map(item => ({ value: item, color: ElementStates.Default }));
-    const chunkSize = 1000; // Максимальный размер массива для безопасной работы
-    const chunks = [];
-  
-    for (let i = 0; i < arr.length; i += chunkSize) {
-      chunks.push(arr.slice(i, i + chunkSize));
     }
-  
-    return chunks.flat();
+
+    return [...res].map((item) => ({
+      value: item,
+      color: ElementStates.Default,
+    }));
   }
-  
-
-
 }
