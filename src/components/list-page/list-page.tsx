@@ -4,10 +4,10 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { useState, ChangeEvent } from "react";
-import { headList, tailList, addToArray, findIndex, Buttons, disabledButton, TButtonName } from "./list.helpers";
+import { headList, tailList, addToArray, findIndex, Buttons, disabledButton, TButtonName } from "./list.utils";
 import { LinkedList, Node } from "./linked-list";
 import { ElementStates } from "../../types/element-states";
-import { randomNum } from "../sorting-page/sorting.func";
+import { randomNum } from "../sorting-page/sorting.utils";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { delay } from "../../services/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
@@ -18,7 +18,7 @@ export type TListCircle = {
 };
 
 const NewLinkedList = new LinkedList<string>(
-  Array.from({ length: 5 }, () => randomNum(0, 99).toString())
+  Array.from({ length: 6 }, () => randomNum(0, 99).toString())
 );
 
 
@@ -56,7 +56,7 @@ export const ListPage = () => {
   };
 
   const addToHead = async () => {
-    if (inputValue && NewLinkedList.size < 10) {
+    if (inputValue && NewLinkedList.size < 6) {
       setLoading(true)
       setLoader({ ...loader, addToHead: true });
       setCurrentButton(Buttons.addToHead)
@@ -67,14 +67,14 @@ export const ListPage = () => {
       setAddTo({ ...addTo, addToHead: false });
 
       const arr = NewLinkedList.makeArray();
-      await addToArray(0, arr, setListArray, setInputValue);
+      await addToArray(0, arr, setListArray, setInputValue, setIndexValue);
       setLoader({ ...loader, addToHead: false });
       setCurrentButton('')
       setLoading(false)
     }
   };
   const addToTail = async () => {
-    if (inputValue && NewLinkedList.size < 10) {
+    if (inputValue && NewLinkedList.size < 6) {
       setLoading(true)
       setLoader({ ...loader, addToTail: true });
       setCurrentButton(Buttons.addToTail)
@@ -85,7 +85,7 @@ export const ListPage = () => {
       NewLinkedList.append(inputValue);
       setAddTo({ ...addTo, addToTail: false });
       const arr = NewLinkedList.makeArray();
-      await addToArray(arr.length - 1, arr, setListArray, setInputValue);
+      await addToArray(arr.length - 1, arr, setListArray, setInputValue, setIndexValue);
       setLoader({ ...loader, addToTail: false });
       setCurrentButton('')
       setLoading(false)
@@ -106,7 +106,7 @@ export const ListPage = () => {
     setAddTo({ ...addTo, deleteTail: false });
     const arr = NewLinkedList.makeArray();
     if (arr.length === 0) setListArray([]);
-    await addToArray(arr.length - 1, arr, setListArray, setInputValue);
+    await addToArray(arr.length - 1, arr, setListArray, setInputValue, setIndexValue);
     setLoader({ ...loader, deleteTail: false });
     setCurrentButton('')
     setLoading(false)
@@ -127,7 +127,7 @@ export const ListPage = () => {
       setAddTo({ ...addTo, deleteHead: false });
       const arr = NewLinkedList.makeArray();
       if (arr.length === 0) setListArray([]);
-      await addToArray(0, arr, setListArray, setInputValue);
+      await addToArray(0, arr, setListArray, setInputValue, setIndexValue);
       setLoader({ ...loader, deleteHead: false });
       setCurrentButton('')
       setLoading(false)
@@ -139,7 +139,7 @@ export const ListPage = () => {
       inputValue &&
       indexValue &&
       Number(indexValue) < NewLinkedList.size &&
-      NewLinkedList.size < 10
+      NewLinkedList.size < 6
     ) {
       setLoading(true)
       setLoader({ ...loader, addAtIndex: true });
@@ -158,8 +158,7 @@ export const ListPage = () => {
       NewLinkedList.insertAt(inputValue, Number(indexValue));
 
       const arr2 = NewLinkedList.makeArray();
-      await addToArray(Number(indexValue), arr2, setListArray, setInputValue);
-      setIndexValue("");
+      await addToArray(Number(indexValue), arr2, setListArray, setInputValue, setIndexValue);
       setLoader({ ...loader, addAtIndex: false });
       setCurrentButton('');
       setLoading(false)
@@ -193,9 +192,7 @@ export const ListPage = () => {
       NewLinkedList.deleteByIndex(Number(indexValue));
       const arr2 = NewLinkedList.makeArray();
       if (arr.length === 0) setListArray([]);
-      await addToArray(Number(indexValue), arr2, setListArray, setInputValue);
-      setIndexValue("");
-
+      await addToArray(Number(indexValue), arr2, setListArray, setInputValue, setIndexValue);
       setLoader({ ...loader, deleteAtIndex: false });
       setCurrentButton('')
       setLoading(false)
@@ -219,25 +216,25 @@ export const ListPage = () => {
             text="Добавить в head"
             isLoader={loader.addToHead}
             onClick={addToHead}
-            disabled={!inputValue || (loading && disabledButton(Buttons.addToHead, currentButton))}
+            disabled={!inputValue || listArray.length >= 6 || (loading && disabledButton(Buttons.addToHead, currentButton))}
           />
           <Button
             text="Добавить в tail"
             isLoader={loader.addToTail}
             onClick={addToTail}
-            disabled={!inputValue || (loading && disabledButton(Buttons.addToTail, currentButton))}
+            disabled={!inputValue || listArray.length >= 6 || (loading && disabledButton(Buttons.addToTail, currentButton))}
           />
           <Button
             text="Удалить из head"
             isLoader={loader.deleteHead}
             onClick={deleteHead}
-            disabled={loading && disabledButton(Buttons.deleteHead, currentButton)}
+            disabled={listArray.length === 0 || (loading && disabledButton(Buttons.deleteHead, currentButton))}
           />
           <Button
             text="Удалить из tail"
             isLoader={loader.deleteTail}
             onClick={deleteTail}
-            disabled={loading && disabledButton(Buttons.deleteTail, currentButton)}
+            disabled={listArray.length === 0 || (loading && disabledButton(Buttons.deleteTail, currentButton))}
           />
         </div>
         <div className={styles.inputs}>
@@ -253,7 +250,7 @@ export const ListPage = () => {
             extraClass={styles.button}
             isLoader={loader.addAtIndex}
             onClick={addIndex}
-            disabled={(!inputValue || !indexValue) || (loading && disabledButton(Buttons.addAtIndex, currentButton))}
+            disabled={(!inputValue || !indexValue || Number(indexValue) > listArray.length - 1) || (loading && disabledButton(Buttons.addAtIndex, currentButton))}
           />
           <Button
             text="Удалить по индексу"

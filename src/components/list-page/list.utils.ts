@@ -26,7 +26,8 @@ export const addToArray = async (
   index: number,
   arr: TListCircle[],
   setListArray: React.Dispatch<React.SetStateAction<TListCircle[]>>,
-  setInputValue: React.Dispatch<React.SetStateAction<string>>
+  setInputValue: React.Dispatch<React.SetStateAction<string>>,
+  setIndexValue: React.Dispatch<React.SetStateAction<string>>
 ) => {
   await delay(SHORT_DELAY_IN_MS);
   if (arr.length > 0) {
@@ -38,6 +39,7 @@ export const addToArray = async (
     if (arr[index]) arr[index].color = ElementStates.Default;
     setListArray(arr);
     setInputValue("");
+    setIndexValue("")
   }
 };
 export const findIndex = async (

@@ -49,11 +49,9 @@ export const StringComponent = () => {
       .trim()
       .split("")
       .map((value) => ({ value, color: ElementStates.Default }));
-    try {
-      await reverseArray(arr, setArrayLetter);
-    } catch (error) {
-      console.error(error);
-    }
+    setArrayLetter([...arr]);
+    await delay(DELAY_IN_MS);
+    await reverseArray(arr, setArrayLetter);
     setLoading(false);
   };
   return (

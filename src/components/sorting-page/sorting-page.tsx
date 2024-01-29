@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
 import { ElementStates } from "../../types/element-states";
-import { selectionSort, bubbleSort, randomArr } from "./sorting.func";
+import { selectionSort, bubbleSort, randomArr } from "./sorting.utils";
 
 export type TArray = {
   value: number;
@@ -17,7 +17,7 @@ export type TArray = {
 type TSort = "selection" | "bubble";
 
 export const SortingPage = () => {
-  const [randomNums, setRandomNums] = useState<TArray[]>([]);
+  const [randomNums, setRandomNums] = useState<TArray[]>(randomArr());
   const [sortType, setSortType] = useState<TSort>("selection");
   const [sorting, setSorting] = useState<Direction>();
   const [loading, setLoading] = useState(false);
