@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./circle.module.css";
 import { ElementStates } from "../../../types/element-states";
 
-interface CircleProps {
+export interface CircleProps {
   state?: ElementStates;
   letter?: string;
   head?: string | React.ReactElement | null;
@@ -21,9 +21,10 @@ export const Circle: React.FC<CircleProps> = ({
   tail,
   extraClass = "",
   isSmall,
+  ...rest
 }) => {
   return (
-    <div className={`${styles.content} ${extraClass}`}>
+    <div className={`${styles.content} ${extraClass}`}  {...rest}>
       <div
         className={`text text_type_input text_color_input mb-4 ${
           styles.absolute
@@ -38,11 +39,11 @@ export const Circle: React.FC<CircleProps> = ({
           styles[state]
         }`}
       >
-        <p
+        {letter && <p
           className={`text text_type_circle text_color_input ${styles.letter}`}
         >
           {letter}
-        </p>
+        </p> }
       </div>
       <p
         className={`text text_type_input text_color_input mt-4 ${styles.absolute} ${styles.index}`}

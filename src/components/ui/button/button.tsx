@@ -5,7 +5,7 @@ import { AscendingIcon } from "../icons/ascending-icon";
 import { DescendingIcon } from "../icons/descending-icon";
 import { Direction } from "../../../types/direction";
 
-interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
+export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   text?: string;
   type?: "button" | "submit" | "reset";
   sorting?: Direction;
@@ -44,7 +44,7 @@ export const Button: React.FC<ButtonProps> = ({
       ) : (
         <>
           {sorting && currentIcon}
-          <p className={`text ${sorting && "ml-5"}`}>{text}</p>
+         {text && <p className={`text ${sorting && "ml-5"}`}>{text}</p>}
         </>
       )}
     </button>

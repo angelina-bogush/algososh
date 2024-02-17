@@ -60,19 +60,21 @@ export const StringComponent = () => {
         className={styles.input}
         onSubmit={(e: React.FormEvent) => submitInput(e, string)}
       >
-        <Input value={string} onChange={onChange} isLimitText maxLength={11} />
+        <Input value={string} onChange={onChange} isLimitText maxLength={11} data-testid="inputString"/>
         <Button
+          data-testid="button"
           type="submit"
           text="Развернуть"
           disabled={!string}
           isLoader={loading}
         />
       </form>
-      <div className={styles.reverseString}>
+      {/* <p data-testid='id' ></p> */}
+      <div className={styles.reverseString} data-testid="result">
         {arrayLetter &&
           arrayLetter.map((letter, index) => (
-            <div key={index}>
-              <Circle letter={String(letter.value)} state={letter.color} />
+            <div key={index} data-testid='id'>
+              <Circle letter={String(letter.value)} state={letter.color}/>
             </div>
           ))}
       </div>
