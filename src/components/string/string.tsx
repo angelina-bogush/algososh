@@ -9,6 +9,7 @@ import { ChangeEvent } from "react";
 import { swapFunc } from "../../services/utils";
 import { delay } from "../../services/utils";
 import { DELAY_IN_MS } from "../../constants/delays";
+import { reverseArray } from "./string.utils";
 
 export type TArray = {
   value: string | number;
@@ -23,24 +24,24 @@ export const StringComponent = () => {
     setString(e.target.value);
   };
 
-  const reverseArray = async (
-    arr: TArray[] | [],
-    setArray: React.Dispatch<React.SetStateAction<TArray[]>>
-  ) => {
-    const mid = Math.ceil(arr.length / 2);
+  // const reverseArray = async (
+  //   arr: TArray[] | [],
+  //   setArray: React.Dispatch<React.SetStateAction<TArray[]>>
+  // ) => {
+  //   const mid = Math.ceil(arr.length / 2);
+  //   const newArr = [...arr];
 
-    for (let i = 0; i < mid; i++) {
-      let j = arr.length - 1 - i;
-      arr[i].color = arr[j].color = ElementStates.Changing;
-      setArray([...arr]);
-      await delay(DELAY_IN_MS);
-
-      swapFunc(arr, i, j);
-
-      arr[i].color = arr[j].color = ElementStates.Modified;
-      setArray([...arr]);
-    }
-  };
+  //   for (let i = 0; i < mid; i++) {
+  //     let j = arr.length - 1 - i;
+  //     newArr[i].color = newArr[j].color = ElementStates.Changing;
+  //     setArray([...newArr]);
+  //     await delay(DELAY_IN_MS);
+  //     swapFunc(newArr, i, j);
+  //     newArr[i].color = newArr[j].color = ElementStates.Modified;
+  //     setArray([...newArr]);
+  //   }
+  //   return newArr
+  // };
 
   const submitInput = async (e: React.FormEvent, string: string) => {
     e.preventDefault();
@@ -74,7 +75,7 @@ export const StringComponent = () => {
         {arrayLetter &&
           arrayLetter.map((letter, index) => (
             <div key={index} data-testid='id'>
-              <Circle letter={String(letter.value)} state={letter.color}/>
+              <Circle letter={String(letter.value)} state={letter.color} data-testid="resultCircle"/>
             </div>
           ))}
       </div>
