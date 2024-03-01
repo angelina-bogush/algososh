@@ -24,7 +24,7 @@ export const Circle: React.FC<CircleProps> = ({
   ...rest
 }) => {
   return (
-    <div className={`${styles.content} ${extraClass}`}  {...rest}>
+    <div className={`${styles.content} ${extraClass}`}  {...rest} data-cy="circleWrapper">
       <div
         className={`text text_type_input text_color_input mb-4 ${
           styles.absolute
