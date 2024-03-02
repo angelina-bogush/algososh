@@ -11,6 +11,9 @@ export const bubbleSort = async (
   sort: Direction,
   setArray: Dispatch<SetStateAction<TArray[]>>
 ) => {
+  if (arr.length <= 1) {
+    return arr
+  }
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr.length - i - 1; j++) {
       arr[j].color = ElementStates.Changing;
@@ -41,6 +44,9 @@ export const selectionSort = async (
   sort: Direction,
   setArray: Dispatch<SetStateAction<TArray[]>>
 ) => {
+  if (arr.length <= 1) {
+    return arr
+  }
   for (let i = 0; i < arr.length - 1; i++) {
     let min = i;
     for (let j = i + 1; j < arr.length; j++) {

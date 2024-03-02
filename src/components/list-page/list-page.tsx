@@ -17,9 +17,10 @@ export type TListCircle = {
   color: ElementStates;
 };
 
-const NewLinkedList = new LinkedList<string>(
-  Array.from({ length: 6 }, () => randomNum(0, 99).toString())
-);
+// const NewLinkedList = new LinkedList<string>(
+//   Array.from({ length: 5 }, () => randomNum(0, 99).toString())
+// );
+const NewLinkedList = new LinkedList<string>(['1','2','3','4','5']);
 
 
 export const ListPage = () => {

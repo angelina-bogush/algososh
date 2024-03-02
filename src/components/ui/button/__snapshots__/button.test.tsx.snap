@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component renders button with text correctly 1`] = `
+<button
+  class="text text_type_button text_color_primary button undefined false "
+  type="button"
+>
+  <p
+    class="text undefined"
+  >
+    Click me
+  </p>
+</button>
+`;
+
+exports[`Button component renders button without text correctly 1`] = `
+<button
+  class="text text_type_button text_color_primary button undefined false "
+  type="button"
+/>
+`;
+
+exports[`Button component renders disabled button correctly 1`] = `
+<button
+  class="text text_type_button text_color_primary button undefined false "
+  disabled=""
+  type="button"
+>
+  
+</button>
+`;
+
+exports[`Button component renders loading button correctly 1`] = `
+<button
+  class="text text_type_button text_color_primary button undefined loader "
+  disabled=""
+  type="button"
+>
+  <img
+    alt="Загрузка."
+    class="loader_icon"
+    src="loader.svg"
+  />
+</button>
+`;
