@@ -1,7 +1,7 @@
 import { DELAY_IN_MS } from './../../src/constants/delays';
 describe("StringComponent", () => {
   beforeEach(() => {
-    cy.visit(`http://localhost:3000/recursion`);
+    cy.visit('recursion');
   });
 
   it("should be disable button when input is empty", () => {

@@ -1,6 +1,7 @@
 
 describe("App", () => {
   it("should be up and running", () => {
-    cy.visit('http://localhost:3000/');
+    const baseUrl = Cypress.config('baseUrl');
+    if (baseUrl) cy.visit(baseUrl);
   });
 });

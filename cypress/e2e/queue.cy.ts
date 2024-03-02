@@ -1,9 +1,9 @@
-
+import { circleWrapperSelector} from "../../src/constants/e2e";
 const inputValues = ['1', '2', '3']
 
 describe("Queue", () => {
     beforeEach(() => {
-        cy.visit(`http://localhost:3000/queue`);
+        cy.visit('queue');
     });
     it("should button be disable with empty input", () => {
         cy.get("input").should("be.empty");
@@ -13,9 +13,8 @@ describe("Queue", () => {
         inputValues.forEach(((val, index) => {
             cy.get("input").type(val);
             cy.contains('Добавить').click();
-            cy.get('[data-cy="circleWrapper"]').as('circleWrapper').contains(val);
-            cy.get('[data-cy="circle"]').as('circleComponent')
-            cy.get('@circleComponent').eq(index).should("contain", inputValues[index])
+            cy.get(circleWrapperSelector).as('circleWrapper').contains(val);
+            cy.get('@circleWrapper').eq(index).should("contain", inputValues[index])
             if (index === 0) {
                 cy.get('@circleWrapper').should('contain', 'tail').and('contain', 'head')
             }
@@ -28,7 +27,7 @@ describe("Queue", () => {
         cy.contains('Добавить').click();
         cy.get("input").type('1');
         cy.contains('Добавить').click();
-        cy.get('[data-cy="circleWrapper"]').as('circleComponent');
+        cy.get(circleWrapperSelector).as('circleComponent');
         cy.contains('Удалить').click();
 
         cy.get("@circleComponent").each((el, ind) => {
@@ -46,7 +45,7 @@ describe("Queue", () => {
             cy.contains('Добавить').click();
         }))
         cy.contains('Очистить').click();
-        cy.get('[data-cy="circle"]').should("contain", '')
+        cy.get(circleWrapperSelector).should("contain", '')
     }
     )
 })
